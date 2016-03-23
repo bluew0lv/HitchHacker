@@ -18,12 +18,10 @@ angularApp.controller("testCtrl", ["$scope", "$rootScope", "currentAuth", functi
 angularApp.controller("forumCtrl", ["$scope", "$rootScope", "currentAuth", function ($scope, $rootScope, currentAuth) {
     console.log('forum');
 
-    var ref = new Firebase('https://danielstestdatabase.firebaseio.com/');
+    var authData = $rootScope.fb.getAuth();
+    var userRef = $rootScope.fb.child("forum");
 
     $scope.newTrip = function () {
-        var authData = ref.getAuth();
-        var userRef = ref.child("forum");
-
         userRef.push({
             original: {
                 author: authData.uid,
@@ -35,8 +33,7 @@ angularApp.controller("forumCtrl", ["$scope", "$rootScope", "currentAuth", funct
     }
 
     $scope.forumPosts = function () {
-        var authData = ref.getAuth();
-        ref.child("forum").on("child_added", function (snapshot, prevChildKey) {
+        userRef.on("child_added", function (snapshot, prevChildKey) {
                 var post = snapshot.child("original").val();
                 console.log("Author: " + post.author);
                 console.log("Origin: " + post.origin);
@@ -52,9 +49,9 @@ angularApp.controller("forumCtrl", ["$scope", "$rootScope", "currentAuth", funct
 angularApp.controller("profileCtrl", ["$scope", "$rootScope", "currentAuth", function ($scope, $rootScope, currentAuth) {
     console.log('Profile');
 
+    var ref = $rootScope.fb;
+    var authData = ref.getAuth();
     $scope.isLogin = function () {
-        var ref = new Firebase("https://danielstestdatabase.firebaseio.com");
-        var authData = ref.getAuth();
         if (authData) {
             console.log("User " + authData.uid + " is logged in with " + authData.provider);
             return true;
@@ -65,7 +62,6 @@ angularApp.controller("profileCtrl", ["$scope", "$rootScope", "currentAuth", fun
     }
 
     $scope.changeEmail = function () {
-        var ref = new Firebase("https://danielstestdatabase.firebaseio.com");
         ref.changeEmail({
             oldEmail: $scope.oldEmail,
             newEmail: $scope.newEmail,
@@ -80,7 +76,6 @@ angularApp.controller("profileCtrl", ["$scope", "$rootScope", "currentAuth", fun
     }
 
     $scope.changePassword = function () {
-        var ref = new Firebase("https://danielstestdatabase.firebaseio.com");
         ref.changePassword({
             email: $scope.passwordEmail,
             oldPassword: $scope.oldPassword,
@@ -95,7 +90,6 @@ angularApp.controller("profileCtrl", ["$scope", "$rootScope", "currentAuth", fun
     }
 
     $scope.deleteAccount = function () {
-        var ref = new Firebase("https://danielstestdatabase.firebaseio.com");
         ref.removeUser({
             email: $scope.email,
             password: $scope.password
@@ -112,9 +106,10 @@ angularApp.controller("profileCtrl", ["$scope", "$rootScope", "currentAuth", fun
 angularApp.controller("navCtrl", ["$scope", "$rootScope", function ($scope, $rootScope) {
     console.log('nav');
 
+    var ref = $rootScope.fb;
+    var authData = ref.getAuth();
+
     $scope.isLogin = function () {
-        var ref = new Firebase("https://danielstestdatabase.firebaseio.com");
-        var authData = ref.getAuth();
         if (authData) {
             console.log("User " + authData.uid + " is logged in with " + authData.provider);
             return true;
@@ -125,13 +120,13 @@ angularApp.controller("navCtrl", ["$scope", "$rootScope", function ($scope, $roo
     }
 
     $scope.logout = function () {
-        var ref = new Firebase("https://danielstestdatabase.firebaseio.com");
         ref.unauth();
     }
 }]);
 
 angularApp.controller("loginCtrl", ["$scope", "$rootScope", "currentAuth", function ($scope, $rootScope, currentAuth) {
     console.log('Login');
+    var ref = $rootScope.fb;
 
     $scope.forgotPassword = false;
 
@@ -144,7 +139,6 @@ angularApp.controller("loginCtrl", ["$scope", "$rootScope", "currentAuth", funct
     };
 
     $scope.resetPassword = function () {
-        var ref = new Firebase("https://danielstestdatabase.firebaseio.com");
         ref.resetPassword({
             email: $scope.email
         }, function (error) {
@@ -157,7 +151,6 @@ angularApp.controller("loginCtrl", ["$scope", "$rootScope", "currentAuth", funct
     };
 
     $scope.loginUser = function () {
-        var ref = new Firebase("https://danielstestdatabase.firebaseio.com");
         ref.authWithPassword({
             email: $scope.email,
             password: $scope.password
@@ -179,9 +172,9 @@ angularApp.controller("loginCtrl", ["$scope", "$rootScope", "currentAuth", funct
 angularApp.controller("registerCtrl", ["$scope", "$rootScope", "currentAuth", function ($scope, $rootScope, currentAuth) {
     console.log('Register');
 
-    $scope.createUser = function () {
-        var ref = new Firebase("https://danielstestdatabase.firebaseio.com");
+    var ref = $rootScope.fb;
 
+    $scope.createUser = function () {
         ref.createUser({
             email: $scope.email,
             password: $scope.password
