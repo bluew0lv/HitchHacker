@@ -3,7 +3,7 @@ var angularApp = angular.module('angularApp', ['ngRoute', 'firebase'])
     //Create Auth Factory
 angularApp.factory("Auth", ["$firebaseAuth",
   function ($firebaseAuth) {
-        var ref = new Firebase("https://danielstestdatabase.firebaseio.com");
+        var ref = new Firebase("https://hitchhacker.firebaseio.com");
         return $firebaseAuth(ref);
   }
 
@@ -13,7 +13,7 @@ angularApp.factory("Auth", ["$firebaseAuth",
 angularApp.run(function ($rootScope, $location, $window, $firebase, $firebaseAuth, $firebaseObject, Auth) {
 
     //Create the Firebase ref object "fb" that represents the Entire FireBase Database
-    $rootScope.fb = new Firebase("https://danielstestdatabase.firebaseIO.com");
+    $rootScope.fb = new Firebase("https://hitchhacker.firebaseIO.com");
 
     //SECURITY HANDLERS --------------------- //
 
