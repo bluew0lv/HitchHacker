@@ -15,7 +15,6 @@
     <!--Styles-->
     <link rel="stylesheet" type="text/css" href="css/default.css" />
 
-
     <!-- AngularJS -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js" type="text/javascript"></script>
 
@@ -35,7 +34,6 @@
 
 
     <title>Angular Template</title>
-
     </script>
 
 </head>
@@ -53,9 +51,8 @@
         <a href="forum" ng-show="isLogin()">FORUM</a>
         <a href="info">ABOUT</a>
 
-
         <!--This is a test button for console-->
-        <input type="button" value="Am I logged in?" ng-click="isLogin()" />
+        <input type="button" value="Logged in?" ng-click="isLogin()" />
 
         <!--Logout Button-->
         <input type="button" value="Logout" ng-show="isLogin()" ng-click="logout()" />
@@ -63,7 +60,6 @@
     </div>
 
     <!--SITE VIEW DIV-->
-
     <div ng-view autoscroll="true"></div>
 
 </body>

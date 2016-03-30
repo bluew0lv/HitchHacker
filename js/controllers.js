@@ -121,6 +121,8 @@ angularApp.controller("navCtrl", ["$scope", "$rootScope", function ($scope, $roo
 
     $scope.logout = function () {
         ref.unauth();
+        //Reloads the page to the home page
+        window.location.href = '/';
     }
 }]);
 
@@ -159,6 +161,7 @@ angularApp.controller("loginCtrl", ["$scope", "$rootScope", "currentAuth", funct
                 console.log("Login Failed!", error);
             } else {
                 console.log("Authenticated successfully with payload:", authData);
+                window.location.href = '/'
             }
         });
     };
@@ -183,6 +186,17 @@ angularApp.controller("registerCtrl", ["$scope", "$rootScope", "currentAuth", fu
                 console.log("Error creating user:", error);
             } else {
                 console.log("Successfully created user account with uid:", userData.uid);
+                ref.authWithPassword({
+                    email: $scope.email,
+                    password: $scope.password
+                }, function (error, authData) {
+                    if (error) {
+                        console.log("Login Failed!", error);
+                    } else {
+                        console.log("Authenticated successfully with payload:", authData);
+                        window.location.href = '/'
+                    }
+                });
             }
         });
     };
