@@ -19,7 +19,7 @@ angularApp.controller("testCtrl", ["$scope", "$rootScope", "currentAuth", functi
 
 var firebaseRef = new Firebase(url);
 
-function funct1(evt)
+function funct1()
 {
     var title = $('#p-title').text();
     
@@ -42,7 +42,3 @@ submit.onclick = funct1(evt);
     
     console.log('Test');    
 }]);
-
-
-
-
