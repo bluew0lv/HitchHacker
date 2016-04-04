@@ -178,26 +178,53 @@ angularApp.controller("registerCtrl", ["$scope", "$rootScope", "currentAuth", fu
     var ref = $rootScope.fb;
 
     $scope.createUser = function () {
-        ref.createUser({
-            email: $scope.email,
-            password: $scope.password
-        }, function (error, userData) {
-            if (error) {
-                console.log("Error creating user:", error);
-            } else {
-                console.log("Successfully created user account with uid:", userData.uid);
-                ref.authWithPassword({
+        var day = $scope.dob.split('/')[1];
+        var month = $scope.dob.split('/')[0];
+        var year = $scope.dob.split('/')[2];
+        var age = 18;
+        var mydate = new Date();
+        mydate.setFullYear(year, month - 1, day);
+
+        var currdate = new Date();
+        var setDate = new Date();
+        setDate.setFullYear(mydate.getFullYear() + age, month - 1, day);
+
+        if ($scope.password == $scope.cpassword) {
+            if ((currdate - setDate) > 0) {
+                ref.createUser({
                     email: $scope.email,
                     password: $scope.password
-                }, function (error, authData) {
+                }, function (error, userData) {
                     if (error) {
-                        console.log("Login Failed!", error);
+                        console.log("Error creating user:", error);
                     } else {
-                        console.log("Authenticated successfully with payload:", authData);
-                        window.location.href = '/'
+                        console.log("Successfully created user account with uid:", userData.uid);
+                        ref.authWithPassword({
+                            email: $scope.email,
+                            password: $scope.password
+                        }, function (error, authData) {
+                            if (error) {
+                                console.log("Login Failed!", error);
+                            } else {
+                                console.log("Authenticated successfully with payload:", authData);
+                                window.location.href = '/'
+                            }
+                        });
+
+                        ref.child("users").child(userData.uid).set({
+                            email: $scope.email,
+                            fname: $scope.fname,
+                            lname: $scope.lname,
+                            dob: $scope.dob
+                        });
                     }
                 });
+            } else {
+                alert("under 18");
+                window.location.href = '/';
             }
-        });
+        } else {
+            alert("Passwords do not Match");
+        }
     };
 }]);
