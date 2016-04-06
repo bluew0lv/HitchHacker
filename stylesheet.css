@@ -21,3 +21,20 @@ li a {
 li a:hover {
     background-color: black;
 }
+
+.signup {
+    /*    margin-left: 40px;*/
+    text-align: center;
+    color: white;
+}
+
+.background {
+    background-image: url("blue_metal.png");
+    /* background-color: #cccccc;*/
+    /* background-repeat: repeat|repeat-x|repeat-y; */
+}
+
+.title {
+    text-align: center;
+    color: white;
+}
