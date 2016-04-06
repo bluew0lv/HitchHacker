@@ -1,20 +1,17 @@
 .signup {
     /*    margin-left: 40px;*/
     text-align: center;
-    margin-top: ;
-    /*background-color: blue;*/
-    /*
-    left: 0;
-    line-height: 200px;
-    margin: auto;
-    margin-top: -100px;
-    position: absolute;
-    top: 50%;
-    width: 100%;*/
+    color: white;
 }
 
 .background {
     background-image: url("blue_metal.png");
     /* background-color: #cccccc;*/
-    background-repeat: repeat|repeat-x|repeat-y;
+    /* background-repeat: repeat|repeat-x|repeat-y; */
+	
+}
+
+.title {
+   text-align: center;
+    color: white;	
 }
