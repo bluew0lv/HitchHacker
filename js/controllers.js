@@ -302,7 +302,7 @@ angularApp.controller("locationCtrl", ["$scope", "$rootScope", "currentAuth", "$
           console.log('Going');
         $scope.directions.show  = true;
       } else {
-        alert('Google route unsuccesfull!');
+        alert('Google route unsuccesfull!, Incorrect Entry');
       }
     });
     }
