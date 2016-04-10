@@ -280,19 +280,19 @@ angularApp.controller("locationCtrl", ["$scope", "$rootScope", "currentAuth", "$
              travelMode: google.maps.DirectionsTravelMode.DRIVING
         };
         
-        var LatLng =  {lat: 41, lng: -85};
+       var LatLng =  {lat: 41, lng: -85};
         map = new google.maps.Map(document.getElementById('map'), {
             control: {},
             center: LatLng,
              zoom: 14,
              mapTypeId: google.maps.MapTypeId.ROADMAP
         });
-         
+         /*
          var marker = new google.maps.Marker({
           position: LatLng,
           map: map
         });
-        
+          */
         
         directionsService.route(directionRequest, function (response, status) {
       if (status === google.maps.DirectionsStatus.OK) {
