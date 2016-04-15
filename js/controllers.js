@@ -60,6 +60,19 @@ angularApp.controller("forumCtrl", ["$scope", "$rootScope", "$firebaseArray", "c
     
     $scope.searchTrips = function() {
         
+        var searchRef = userRef;
+        
+        if ($scope.searchOrigin) {
+            
+            searchRef = searchRef.orderByChild("original/origin").equalTo($scope.searchOrigin);
+        }
+        
+        if ($scope.searchDest) {
+            
+            searchRef = searchRef.orderByChild("original/dest").equalTo($scope.searchDest);
+        }
+        
+        $scope.posts = $firebaseArray(searchRef);
     }
     
     $scope.newTrip = function() {
