@@ -71,6 +71,23 @@ angularApp.config(['$routeProvider', '$locationProvider', function ($routeProvid
             }]
         }
     })
+    
+    .when('/forum/:postID', {
+        controller: 'forumPostController',
+        templateUrl: 'html/forum/post.html',
+        routedata: {
+            access: '0',
+            title: 'Forum'
+        },
+        resolve: {
+            // controller will not be loaded until $waitForAuth resolves
+            // Auth refers to our $firebaseAuth wrapper in the example above
+            'currentAuth': ['Auth', function (Auth) {
+                // $waitForAuth returns a promise so the resolve waits for it to complete
+                return Auth.$waitForAuth();
+            }]
+        }
+    })
 
     .when('/register/', {
         controller: 'registerCtrl',
@@ -151,6 +168,6 @@ angularApp.config(['$routeProvider', '$locationProvider', function ($routeProvid
     });
 
     // use the HTML5 History API
-    $locationProvider.html5Mode(true);
+    $locationProvider.html5Mode(false);
 
 }]);

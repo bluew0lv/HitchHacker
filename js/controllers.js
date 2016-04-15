@@ -15,35 +15,94 @@ angularApp.controller("testCtrl", ["$scope", "$rootScope", "currentAuth", functi
     console.log('Test');
 }]);
 
-angularApp.controller("forumCtrl", ["$scope", "$rootScope", "currentAuth", function ($scope, $rootScope, currentAuth) {
+angularApp.controller("forumCtrl", ["$scope", "$rootScope", "$firebaseArray", "currentAuth", function ($scope, $rootScope, $firebaseArray, currentAuth) {
     console.log('forum');
 
     var authData = $rootScope.fb.getAuth();
     var userRef = $rootScope.fb.child("forum");
-
-    $scope.newTrip = function () {
-        userRef.push({
+    
+    $scope.posts = $firebaseArray(userRef);
+    $scope.origin = "";
+    $scope.dest = "";
+    $scope.message = "";
+    
+    $scope.searchOrigin = "";
+    $scope.searchDest = "";
+    
+    $scope.showPostButton = true;
+    $scope.showPostForm = false;
+    $scope.showSearchButton = true;
+    $scope.showSearchForm = false;
+    
+    $scope.showTripForm = function() {
+        
+        $scope.showPostButton = false;
+        $scope.showPostForm = true;
+    };
+    
+    $scope.hideTripForm = function() {
+        
+        $scope.showPostButton = true;
+        $scope.showPostForm = false;
+    }
+    
+    $scope.showSearchTripForm = function() {
+        
+        $scope.showSearchButton = false;
+        $scope.showSearchForm = true;
+    }
+    
+    $scope.hideSearchTripForm = function() {
+        
+        $scope.showSearchButton = true;
+        $scope.showSearchForm = false;
+    }
+    
+    $scope.searchTrips = function() {
+        
+    }
+    
+    $scope.newTrip = function() {
+        
+        var postDate = new Date().toString();
+        
+        $scope.posts.$add({
             original: {
                 author: authData.uid,
                 origin: $scope.origin,
                 dest: $scope.dest,
-                message: $scope.message
+                message: $scope.message,
+                date: postDate
             }
         });
+        
+        $scope.hideTripForm();
     }
+}]);
 
-    $scope.forumPosts = function () {
-        userRef.on("child_added", function (snapshot, prevChildKey) {
-                var post = snapshot.child("original").val();
-                console.log("Author: " + post.author);
-                console.log("Origin: " + post.origin);
-                console.log("Destination: " + post.dest);
-                console.log("Message: " + post.message);
-            },
-            function (errorObject) {
-                console.log("The read failed: " + errorObject.code);
-            });
-    }
+angularApp.controller("forumPostController", ["$scope", "$rootScope", "$firebaseArray", "$firebaseObject", "$routeParams", "currentAuth", function ($scope, $rootScope, $firebaseArray, $firebaseObject, $routeParams, currentAuth) {
+    
+    var postID = $routeParams.postID;
+    var authData = $rootScope.fb.getAuth();
+    var postRef = $rootScope.fb.child("forum").child(postID);
+    
+    $scope.originalPost = $firebaseObject(postRef.child("original"));
+    $scope.replies = $firebaseArray(postRef.child("replies"));
+    
+    $scope.message = "";
+    
+    $scope.postReply = function() {
+        
+        var postDate = new Date().toString();
+        
+        $scope.replies.$add({
+            author: authData.uid,
+            message: $scope.message,
+            date: postDate
+        });
+        
+        $scope.message = "";
+    };
 }]);
 
 angularApp.controller("profileCtrl", ["$scope", "$rootScope", "currentAuth", function ($scope, $rootScope, currentAuth) {

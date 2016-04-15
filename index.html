@@ -10,7 +10,7 @@
     <meta name="keywords" content="">
 
     <!--Set the Application Base URI-->
-    <base href="/">
+    <base href="/#/">
 
     <!--Styles-->
     <link rel="stylesheet" type="text/css" href="css/default.css" />
@@ -44,12 +44,12 @@
     <div id="navbar" ng-controller="navCtrl">
 
         <!--NAV BAR hides when logged in/out-->
-        <a href="/">HOME</a>
-        <a href="login" ng-hide="isLogin()">LOGIN</a>
-        <a href="register" ng-hide="isLogin()">REGISTER</a>
-        <a href="profile" ng-show="isLogin()">PROFILE</a>
-        <a href="forum" ng-show="isLogin()">FORUM</a>
-        <a href="info">ABOUT</a>
+        <a href="/#/">HOME</a>
+        <a href="/#/login" ng-hide="isLogin()">LOGIN</a>
+        <a href="/#/register" ng-hide="isLogin()">REGISTER</a>
+        <a href="/#/profile" ng-show="isLogin()">PROFILE</a>
+        <a href="/#/forum" ng-show="isLogin()">FORUM</a>
+        <a href="/#/info">ABOUT</a>
 
         <!--This is a test button for console-->
         <input type="button" value="Logged in?" ng-click="isLogin()" />
