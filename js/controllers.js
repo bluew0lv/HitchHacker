@@ -11,48 +11,53 @@ angularApp.controller("infoCtrl", ["$scope", "$rootScope", "currentAuth", functi
     $scope.blocked = [];
 
     $scope.pullBlocked = function () {
+        $scope.blocked = [];
         $rootScope.fb.child("users").child(authData.uid).child("blocked").on("child_added", function (snapshot, prevChildKey) {
             var snap = snapshot.val();
-            console.log($scope.blocked.length)
             if ($scope.blocked.length > 0) {
                 angular.forEach($scope.blocked, function (blckd) {
                     if (!(blckd.uid == snap.user)) {
                         $scope.blocked.push({
                             uid: snap.user
-
                         });
-                        console.log("Block list updated!");
+                        console.log("Block list updated!" + snap.user);
+                        console.log($scope.blocked.length);
                     }
-                    console.log("User's Blocked Users");
-                    console.log(blckd.uid);
                 })
             } else {
                 $scope.blocked.push({
                     uid: snap.user
                 });
-                console.log("User's Blocked Users");
-                console.log(snap.user);
+                console.log("Block list updated!" + snap.user);
+                console.log($scope.blocked.length);
             }
-
-        })
+        });
     };
 
     $scope.pullUsers = function () {
+        $scope.todos = [];
         $scope.pullBlocked();
         $rootScope.fb.child("users").on("child_added", function (snapshot, prevChildKey) {
             var newPost = snapshot.val();
             console.log(snapshot.key());
             console.log("Name:" + newPost.fname + ' ' + newPost.lname);
-            console.log($scope.blocked.length);
             if (!(authData.uid == snapshot.key())) {
-                console.log("Pushing user " + snapshot.key());
-                $scope.$apply(function () {
-                    $scope.todos.push({
-                        uid: snapshot.key(),
-                        name: newPost.fname + " " + newPost.lname,
-                        blocked: false
-                    })
+                var isBlocked = $scope.blocked.some(function (blckd) {
+                    return snapshot.key() == blckd.uid
                 })
+                if (!isBlocked) {
+                    $scope.$apply(function () {
+                        $scope.todos.push({
+                            uid: snapshot.key(),
+                            name: newPost.fname + ' ' + newPost.lname
+                        })
+                    })
+                    console.log("User not blocked");
+                } else {
+                    console.log("User is blocked list");
+                }
+            } else {
+                console.log("Current User");
             }
 
         })
@@ -79,7 +84,7 @@ angularApp.controller("infoCtrl", ["$scope", "$rootScope", "currentAuth", functi
             }
         });
     };
-            }]);
+}]);
 
 angularApp.controller("termsCtrl", ["$scope", "$rootScope", "currentAuth", function ($scope, $rootScope, currentAuth) {
     console.log('Terms');
