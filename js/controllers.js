@@ -5,7 +5,81 @@ angularApp.controller("homeCtrl", ["$scope", "$rootScope", "currentAuth", functi
 
 angularApp.controller("infoCtrl", ["$scope", "$rootScope", "currentAuth", function ($scope, $rootScope, currentAuth) {
     console.log('Info');
-}]);
+
+    var authData = $rootScope.fb.getAuth();
+    $scope.todos = [];
+    $scope.blocked = [];
+
+    $scope.pullBlocked = function () {
+        $rootScope.fb.child("users").child(authData.uid).child("blocked").on("child_added", function (snapshot, prevChildKey) {
+            var snap = snapshot.val();
+            console.log($scope.blocked.length)
+            if ($scope.blocked.length > 0) {
+                angular.forEach($scope.blocked, function (blckd) {
+                    if (!(blckd.uid == snap.user)) {
+                        $scope.blocked.push({
+                            uid: snap.user
+
+                        });
+                        console.log("Block list updated!");
+                    }
+                    console.log("User's Blocked Users");
+                    console.log(blckd.uid);
+                })
+            } else {
+                $scope.blocked.push({
+                    uid: snap.user
+                });
+                console.log("User's Blocked Users");
+                console.log(snap.user);
+            }
+
+        })
+    };
+
+    $scope.pullUsers = function () {
+        $scope.pullBlocked();
+        $rootScope.fb.child("users").on("child_added", function (snapshot, prevChildKey) {
+            var newPost = snapshot.val();
+            console.log(snapshot.key());
+            console.log("Name:" + newPost.fname + ' ' + newPost.lname);
+            console.log($scope.blocked.length);
+            if (!(authData.uid == snapshot.key())) {
+                console.log("Pushing user " + snapshot.key());
+                $scope.$apply(function () {
+                    $scope.todos.push({
+                        uid: snapshot.key(),
+                        name: newPost.fname + " " + newPost.lname,
+                        blocked: false
+                    })
+                })
+            }
+
+        })
+    };
+
+    $scope.remaining = function () {
+        var count = 0;
+        angular.forEach($scope.todos, function (todo) {
+            count += todo.blocked ? 0 : 1;
+        });
+        return count;
+    };
+
+    $scope.archive = function () {
+        var oldTodos = $scope.todos;
+        $scope.todos = [];
+        angular.forEach(oldTodos, function (todo) {
+            if (todo.blocked) {
+                var ref = $rootScope.fb.child("users").child(authData.uid).child("blocked");
+                var newRef = ref.push();
+                newRef.set({
+                    user: todo.uid
+                });
+            }
+        });
+    };
+            }]);
 
 angularApp.controller("termsCtrl", ["$scope", "$rootScope", "currentAuth", function ($scope, $rootScope, currentAuth) {
     console.log('Terms');
@@ -20,6 +94,23 @@ angularApp.controller("forumCtrl", ["$scope", "$rootScope", "currentAuth", funct
 
     var authData = $rootScope.fb.getAuth();
     var userRef = $rootScope.fb.child("forum");
+
+
+    $scope.getUsers = function () {
+        $scope.pullBlocked();
+        $rootScope.fb.child("users").on("child_added", function (snapshot, prevChildKey) {
+            var snap = snapshot.val();
+            angular.forEach($scope.blocked, function (todo) {
+                if (!(todo.uid == snapshot.key()) && !(authData.uid == snapshot.key())) {
+                    $scope.todos.push({
+                        uid: snapshot.key(),
+                        name: snap.fname + " " + snap.lname,
+                        blocked: false
+                    })
+                }
+            });
+        })
+    };
 
     $scope.newTrip = function () {
         userRef.push({
@@ -43,7 +134,7 @@ angularApp.controller("forumCtrl", ["$scope", "$rootScope", "currentAuth", funct
             function (errorObject) {
                 console.log("The read failed: " + errorObject.code);
             });
-    }
+    };
 }]);
 
 angularApp.controller("profileCtrl", ["$scope", "$rootScope", "currentAuth", function ($scope, $rootScope, currentAuth) {
@@ -51,6 +142,7 @@ angularApp.controller("profileCtrl", ["$scope", "$rootScope", "currentAuth", fun
 
     var ref = $rootScope.fb;
     var authData = ref.getAuth();
+
     $scope.isLogin = function () {
         if (authData) {
             console.log("User " + authData.uid + " is logged in with " + authData.provider);

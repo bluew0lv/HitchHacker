@@ -1,5 +1,17 @@
 <div>
-    
-    <br />
-    IMPORTED ABOUT CONTENT
+
+    <br /> IMPORTED ABOUT CONTENT
+
+    <br/>
+    <input type="button" value="Pull" ng-click="pullUsers()">
+    <input type="button" value="Pull Blocked" ng-click="pullBlocked()">
+
+    <span>{{remaining()}} of {{todos.length}} remaining</span> [ <a href="" ng-click="archive()">Block</a> ]
+    <ul>
+        <li ng-repeat="todo in todos">
+            <input type="checkbox" ng-model="todo.blocked">
+            <span>{{todo.uid}}</span>
+            <span>: {{todo.name}}</span>
+        </li>
+    </ul>
 </div>
