@@ -1,0 +1,48 @@
+<html>
+<head>
+<style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+      #floating-panel {
+        position: absolute;
+        top: 10px;
+        left: 25%;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+      }
+    </style>
+     <!--div id="map" style="width:500px;height:380px;">
+         <google-map control="map.control" center="map.center" zoom="map.zoom">
+             <marker coords="marker.center"></marker></google-map-->
+    </head>
+    <body>
+    <form>
+        <div id="map" style="width:1000px;height:750px;">
+        </div>
+
+        <button ng-click="getDirections()">Get Directions</button>
+        <br/> Origin:
+        <input type="text" size="30" ng-model="directions.origin" placeholder="Origin">
+        <br/> Destination:
+        <input type="text" size="30" ng-model="directions.destination" placeholder="Destination">
+
+    </form>
+
+     <button ng-click="initialize()">Create map</button>
+    <button ng-click="refreshPosition()">Refresh</button>
+    
+    <div id="directionsList" ng-show="directions.show" class="panel panel-primary"></div>
+        </body>
+</html>

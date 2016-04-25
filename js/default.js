@@ -1,10 +1,12 @@
 //Create the Angular Application and load each module
-var angularApp = angular.module('angularApp', ['ngRoute', 'firebase'])
+var angularApp = angular.module('angularApp', ['ngRoute', 'firebase', 'google-maps', 'ngMap'])
     //Create Auth Factory
 angularApp.factory("Auth", ["$firebaseAuth",
   function ($firebaseAuth) {
         var ref = new Firebase("https://hitchhacker.firebaseio.com");
         return $firebaseAuth(ref);
+      var geoFire = new GeoFire(firebaseRef);
+      var ref = geoFire.ref();  // ref === firebaseRef
   }
 
 ]);
