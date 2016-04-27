@@ -45,21 +45,20 @@ angularApp.controller("infoCtrl", ["$scope", "$rootScope", "currentAuth", functi
                 var isBlocked = $scope.blocked.some(function (blckd) {
                     return snapshot.key() == blckd.uid
                 })
+                var alreadyShown = $scope.todos.some(function (todo) {
+                    return snapshot.key() == todo.uid
+                })
                 if (!isBlocked) {
-                    $scope.$apply(function () {
+                    if (!alreadyShown) {
                         $scope.todos.push({
                             uid: snapshot.key(),
                             name: newPost.fname + ' ' + newPost.lname
                         })
-                    })
-                    console.log("User not blocked");
+                    }
                 } else {
                     console.log("User is blocked list");
                 }
-            } else {
-                console.log("Current User");
             }
-
         })
     };
 
@@ -83,14 +82,11 @@ angularApp.controller("infoCtrl", ["$scope", "$rootScope", "currentAuth", functi
                 });
             }
         });
+        $scope.pullUsers();
     };
 }]);
 
-angularApp.controller("termsCtrl", ["$scope", "$rootScope", "currentAuth", function ($scope, $rootScope, currentAuth) {
-    console.log('Terms');
-}]);
-
-angularApp.controller("testCtrl", ["$scope", "$rootScope", "currentAuth", function ($scope, $rootScope, currentAuth) {
+angularApp.controller("profileUCtrl", ["$scope", "$rootScope", "currentAuth", function ($scope, $rootScope, currentAuth) {
     console.log('Test');
 }]);
 
@@ -324,4 +320,8 @@ angularApp.controller("registerCtrl", ["$scope", "$rootScope", "currentAuth", fu
             alert("Passwords do not Match");
         }
     };
+}]);
+
+angularApp.controller("termsCtrl", ["$scope", "$rootScope", "currentAuth", function ($scope, $rootScope, currentAuth) {
+    console.log('Terms');
 }]);
