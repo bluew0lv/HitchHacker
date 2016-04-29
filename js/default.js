@@ -3,7 +3,7 @@ var angularApp = angular.module('angularApp', ['ngRoute', 'firebase'])
     //Create Auth Factory
 angularApp.factory("Auth", ["$firebaseAuth",
   function ($firebaseAuth) {
-        var ref = new Firebase("https://nathan-testing.firebaseio.com/");
+        var ref = new Firebase("https://hitchhacker.firebaseio.com/");
         return $firebaseAuth(ref);
   }
 

@@ -38,7 +38,7 @@ angularApp.controller("forumCtrl", ["$scope", "$rootScope", "$firebaseArray", "c
         
         $scope.showPostButton = false;
         $scope.showPostForm = true;
-    };
+    }
     
     $scope.hideTripForm = function() {
         
@@ -87,7 +87,7 @@ angularApp.controller("forumCtrl", ["$scope", "$rootScope", "$firebaseArray", "c
                 message: $scope.message,
                 date: postDate
             }
-        });
+        })
         
         $scope.hideTripForm();
     }
