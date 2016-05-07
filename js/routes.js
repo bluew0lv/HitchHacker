@@ -55,6 +55,23 @@ angularApp.config(['$routeProvider', '$locationProvider', function ($routeProvid
         }
     })
 
+    .when('/profile/:uid', {
+        controller: 'profileUCtrl',
+        templateUrl: 'html/profile/userprofile.html',
+        routedata: {
+            access: '0',
+            title: 'User Profile'
+        },
+        resolve: {
+            // controller will not be loaded until $waitForAuth resolves
+            // Auth refers to our $firebaseAuth wrapper in the example above
+            'currentAuth': ['Auth', function (Auth) {
+                // $waitForAuth returns a promise so the resolve waits for it to complete
+                return Auth.$waitForAuth();
+            }]
+        }
+    })
+
     .when('/forum/', {
         controller: 'forumCtrl',
         templateUrl: 'html/forum/main.html',
