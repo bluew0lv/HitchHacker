@@ -1,4 +1,4 @@
-ul {
+﻿ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -23,16 +23,15 @@ li a:hover {
 }
 
 .signup {
-    color: white;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    /* bring your own prefixes */
-    transform: translate(-50%, -50%);
+	color: #C0C0C0;
+	position: fixed;
+	top: 50%;
+	left: 50%; /* bring your own prefixes */;
+	transform: translate(-50%, -50%);
 }
 
 .fontColorWhite {
-    color: white;
+    color: #C0C0C0;
 }
 
 .background {
@@ -42,6 +41,8 @@ li a:hover {
 }
 
 .title {
-    text-align: center;
-    color: white;
+	text-align: center;
+	color: #C0C0C0;
+	text-decoration: underline;
 }
+
