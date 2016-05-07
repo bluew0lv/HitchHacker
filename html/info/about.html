@@ -9,7 +9,7 @@
     <ul>
         <li ng-repeat="todo in todos">
             <input type="checkbox" ng-model="todo.blocked">
-            <span>{{todo.uid}}</span>
+            <span><a href="/#profile/{{todo.uid}}">{{todo.uid}}</a></span>
             <span>: {{todo.name}}</span>
         </li>
     </ul>

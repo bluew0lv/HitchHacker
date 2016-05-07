@@ -86,8 +86,9 @@ angularApp.controller("infoCtrl", ["$scope", "$rootScope", "currentAuth", functi
     };
 }]);
 
-angularApp.controller("profileUCtrl", ["$scope", "$rootScope", "currentAuth", function ($scope, $rootScope, currentAuth) {
+angularApp.controller("profileUCtrl", ["$scope", "$rootScope", "currentAuth", "$routeProvider", function ($scope, $rootScope, $routeParams, currentAuth) {
     console.log('Test');
+    var order_id = $routeParams.orderId;
 }]);
 
 angularApp.controller("forumCtrl", ["$scope", "$rootScope", "currentAuth", function ($scope, $rootScope, currentAuth) {
