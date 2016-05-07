@@ -1,14 +1,5 @@
 <!--Pushing to Database -->
 <div>
-    <ul class="unstyled">
-        <li ng-repeat="todo in todos">
-            <input type="checkbox" ng-model="todo.done">
-            <input type="button" value="{{message(todo)}}" ng-click="isVisible(todo)" />
-            <span class="done-{{todo.done}}">{{todo.text}}</span>
-            <span ng-show="todo.visibility">: {{todo.note}}</span>
-        </li>
-    </ul>
-
     <form ng-submit="newTrip()">
         <br/> Origin:
         <input type="text" size="30" ng-model="origin" placeholder="Origin">
@@ -17,6 +8,4 @@
         <input type="text" size="30" ng-model="message" placeholder="Message">
         <input class="btn-primary" type="submit" value="Push">
     </form>
-
-    <input type="button" value="Pull" ng-click="forumPosts()">
 </div>
