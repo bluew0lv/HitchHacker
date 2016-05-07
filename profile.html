@@ -3,7 +3,10 @@
     <meta charset="utf-8">
     <title>Login</title>
 
-    <link href="./stylesheet.css" rel="stylesheet" type="text/css" />
+    <link href="./stylesheet.css" rel="stylesheet" type="text/css">
+    <link href="ChatBar.css" rel="stylesheet" type="text/css">
+	<link href="js/ChatOverlay.js" type="text/javascript">
+    
 
     <!-- AngularJS -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js" type="application/javascript"></script>
@@ -17,9 +20,9 @@
 
 <ul>
     <li><a class="active" href="home.html">Home</a></li>
-    <li><a href="forum.html">Forum</a></li>
+    <li><a href="forum.html" >Forum</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="login.html">Login</a></li>
+    <li><a href="login.html" ng-hide="isLogin()">Login</a></li>
     <li><a href="signup.html"> Signup</a></li>
 </ul>
 
@@ -28,7 +31,7 @@ Profile
 </h1>
 
 <body class="background">
-    <form class="signup">
+    <form class="signup" style="left: 22%; top: 34%; height: 188px; width: 803px;">
         <table style="width:100%;color:white;">
             <tr>
                 <td>Email: </td>
@@ -57,4 +60,13 @@ Profile
         <br>
         <button type="submit" formaction="profile - Editable.html">Edit Profile</button>
     </form>
-</body>
+    
+
+ <div class="chat-sidebar">
+            <div class="sidebar-name" style="height: auto">
+            <a href="javascript:Load_Users();">
+                   
+                </a>
+            </div>
+</div>
+
